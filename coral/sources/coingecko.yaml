@@ -1,0 +1,91 @@
+name: coingecko
+version: 0.1.0
+dsl_version: 3
+backend: http
+description: >-
+  CoinGecko cryptocurrency market data including prices, market caps,
+  and 24h price changes. Uses demo API key authentication.
+inputs:
+  COINGECKO_API_KEY:
+    kind: secret
+    hint: CoinGecko demo API key from coingecko.com/en/api
+base_url: https://api.coingecko.com/api/v3
+auth:
+  type: HeaderAuth
+  headers:
+    - name: x-cg-demo-api-key
+      from: input
+      key: COINGECKO_API_KEY
+test_queries:
+  - SELECT id, symbol, current_price FROM coingecko.markets WHERE vs_currency = 'usd' LIMIT 1
+  - SELECT id, market_cap, price_change_percentage_24h FROM coingecko.markets WHERE vs_currency = 'usd' ORDER BY market_cap DESC LIMIT 3
+tables:
+  - name: markets
+    description: >-
+      Cryptocurrency market data including current price, market cap,
+      24h price change, and volume. Paginated by page number.
+    filters:
+      - name: vs_currency
+        type: Utf8
+        description: Quote currency (e.g. 'usd', 'eur', 'btc').
+    request:
+      method: GET
+      path: /coins/markets
+      query:
+        - name: vs_currency
+          from: filter
+          key: vs_currency
+    response:
+      rows_path: []
+      row_strategy: direct
+    pagination:
+      mode: page
+      page_param: page
+      page_start: 1
+      page_size:
+        default: 100
+        max: 250
+        query_param: per_page
+    columns:
+      - name: id
+        type: Utf8
+        description: Coin identifier (e.g. 'bitcoin', 'ethereum').
+      - name: symbol
+        type: Utf8
+        description: Ticker symbol (e.g. 'btc', 'eth').
+      - name: name
+        type: Utf8
+        description: Display name.
+      - name: current_price
+        type: Float64
+        description: Current price in the quote currency.
+      - name: market_cap
+        type: Float64
+        description: Market capitalization in the quote currency.
+      - name: market_cap_rank
+        type: Int64
+        description: Market cap ranking.
+      - name: total_volume
+        type: Float64
+        description: 24h trading volume.
+      - name: price_change_percentage_24h
+        type: Float64
+        description: Price change percentage over 24 hours.
+      - name: price_change_percentage_7d_in_currency
+        type: Float64
+        description: Price change percentage over 7 days.
+      - name: price_change_percentage_30d_in_currency
+        type: Float64
+        description: Price change percentage over 30 days.
+      - name: circulating_supply
+        type: Float64
+        description: Circulating supply.
+      - name: total_supply
+        type: Float64
+        description: Total supply.
+      - name: ath
+        type: Float64
+        description: All-time high price.
+      - name: ath_change_percentage
+        type: Float64
+        description: Percentage change from all-time high.
