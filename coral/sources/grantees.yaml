@@ -1,0 +1,40 @@
+name: grantees
+version: 0.1.0
+dsl_version: 3
+backend: file
+description: >-
+  DAO grantee registry mapping recipient names to wallets, GitHub handles,
+  project slugs, grant programs, and approved USDC amounts.
+  File-backed CSV source for cross-source JOINs.
+test_queries:
+  - SELECT recipient_name, wallet, amount_approved_usdc FROM grantees.registry LIMIT 3
+  - SELECT recipient_name, github_handle FROM grantees.registry WHERE program = 'RetroPGF' LIMIT 5
+tables:
+  - name: registry
+    description: DAO grantee registry with wallet addresses, GitHub handles, and funding amounts.
+    format: csv
+    source:
+      location: file:///Users/oluwademilade/Desktop/Tide/data/grantees/
+      glob: "**/*.csv"
+    columns:
+      - name: recipient_name
+        type: Utf8
+        description: Name of the grant recipient or project.
+      - name: wallet
+        type: Utf8
+        description: Ethereum wallet address receiving funds.
+      - name: github_handle
+        type: Utf8
+        description: GitHub username or organization handle.
+      - name: github_repo
+        type: Utf8
+        description: Primary GitHub repository name for pulls queries.
+      - name: project_slug
+        type: Utf8
+        description: Project slug for cross-referencing with DeFiLlama and other sources.
+      - name: program
+        type: Utf8
+        description: Grant program (e.g. RetroPGF, Grants Council).
+      - name: amount_approved_usdc
+        type: Float64
+        description: Approved USDC grant amount.

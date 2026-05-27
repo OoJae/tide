@@ -1,0 +1,17 @@
+recipient_name,wallet,github_handle,github_repo,project_slug,program,amount_approved_usdc
+Aave V3,0xDeaDbeefdEAdbeefdEadbEEFdeadbeEFdEaDbeeF,aave,aave-v3,aave-v3,Grants Council,85000
+Uniswap V3,0x1a9C8182C09F50C8318d76927662702b24f8B4A4,Uniswap,uniswap-v3,uniswap-v3,RetroPGF,200000
+Lido Finance,0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c,lidofinance,lido-dao,lido,Grants Council,75000
+Curve DEX,0xD533a949740bb3306d119CC777fa900bA034cd52,curvefi,curve-contract,curve-dex,RetroPGF,62000
+Compound V3,0xc00e94Cb662C3520282E6f5717214004A7f26888,compound-finance,compound-v3,compound-v3,Grants Council,48000
+Yearn Finance,0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e,yearn,yearn-protocol,yearn-finance,RetroPGF,55000
+Rocket Pool,0xd33526068d116c69f7f6c8c4ac720a3851765426,rocket-pool,rocketpool,rocket-pool,Grants Council,66000
+Balancer V2,0xba100000625a3754423978a60c9317c58a424e3D,balancer-labs,balancer-v2,balancer-v2,RetroPGF,42000
+SushiSwap,0x6B3595068778DD592e39A122f4f5a5cF09C90fE2,sushiswap,sushiswap,sushiswap,Grants Council,38000
+Hop Protocol,0xc5102fE9359FD9a28f877a67E36B0F050d51B2b1,hop-protocol,hop,hop-protocol,RetroPGF,52000
+1inch Network,0x1111111254EEB25477B68fb85Ed929f73A960582,1inch,1inch-limit-order-protocol,1inch,Grants Council,67000
+PoolTogether V4,0x3B873a486A66D6C8c264BB7794F20361C2D2Bc68,pooltogether,pooltogether-v4,pooltogether-v4,RetroPGF,35000
+Stargate V2,0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6,stargate-finance,stargate-v2,stargate-v2,RetroPGF,58000
+Eigenlayer,0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83,Layr-Labs,eigenlayer-contracts,eigenlayer,Grants Council,180000
+Synthetix V3,0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7,Synthetix-io,v3-core,synthetix,RetroPGF,95000
+Snapshot,0x409Ba85e6026e04de68Aa190F0dD0c35095E2571,snapshot-labs,snapshot,snapshot,Grants Council,29000

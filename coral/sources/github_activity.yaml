@@ -1,0 +1,39 @@
+name: github_activity
+version: 0.1.0
+dsl_version: 3
+backend: file
+description: >-
+  Pre-fetched GitHub pull request activity for grantee repositories.
+  File-backed CSV source enabling cross-source JOINs with grantee registry.
+test_queries:
+  - SELECT org, pr_number, title, state FROM github_activity.prs LIMIT 3
+  - SELECT org, COUNT(*) AS pr_count FROM github_activity.prs WHERE state = 'merged' GROUP BY org LIMIT 5
+tables:
+  - name: prs
+    description: GitHub pull requests for grantee organizations.
+    format: csv
+    source:
+      location: file:///Users/oluwademilade/Desktop/Tide/data/github/
+      glob: "**/*.csv"
+    columns:
+      - name: org
+        type: Utf8
+        description: GitHub organization or user.
+      - name: pr_number
+        type: Int64
+        description: Pull request number.
+      - name: title
+        type: Utf8
+        description: Pull request title.
+      - name: state
+        type: Utf8
+        description: Pull request state (open, closed, merged).
+      - name: author
+        type: Utf8
+        description: PR author username.
+      - name: merged_at
+        type: Utf8
+        description: Timestamp when the PR was merged.
+      - name: created_at
+        type: Utf8
+        description: Timestamp when the PR was created.
