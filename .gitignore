@@ -39,6 +39,14 @@ yarn-error.log*
 .env*
 !.env.example
 
+# brand design assets (local only)
+/brand/
+
+# local dev tools
+.mcp.json
+.playwright-mcp/
+pnpm-workspace.yaml
+
 # vercel
 .vercel
 

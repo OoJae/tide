@@ -44,18 +44,18 @@ export function ResultsGrid({ rows }: ResultsGridProps) {
 
   return (
     <div className="mt-3 overflow-x-auto">
-      <table className="w-full text-xs">
+      <table className="w-full text-xs font-mono">
         <thead>
-          <tr className="border-b border-gray-800">
+          <tr className="border-b border-border">
             {columns.map((col) => (
               <th
                 key={col}
                 onClick={() => handleSort(col)}
-                className="text-left py-2 px-2 text-gray-500 font-medium cursor-pointer hover:text-gray-300 select-none"
+                className="text-left py-2 px-2 text-text-tertiary font-medium cursor-pointer hover:text-text select-none"
               >
                 {col}
                 {sortCol === col && (
-                  <span className="ml-1 text-cyan-400">
+                  <span className="ml-1 text-accent">
                     {sortDir === "asc" ? "↑" : "↓"}
                   </span>
                 )}
@@ -67,12 +67,12 @@ export function ResultsGrid({ rows }: ResultsGridProps) {
           {sorted.map((row, ri) => (
             <tr
               key={ri}
-              className="border-b border-gray-800/50 hover:bg-gray-900/50"
+              className="border-b border-border-subtle hover:bg-surface-2/50"
             >
               {columns.map((col) => {
                 const val = row[col];
                 return (
-                  <td key={col} className="py-2 px-2 text-gray-300">
+                  <td key={col} className="py-2 px-2 text-text">
                     {val === null
                       ? "—"
                       : typeof val === "number"

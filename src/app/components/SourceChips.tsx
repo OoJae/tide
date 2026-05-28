@@ -1,13 +1,22 @@
 const SOURCE_COLORS: Record<string, string> = {
-  grantees: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-  defillama: "bg-purple-500/20 text-purple-400 border-purple-500/30",
-  github_activity: "bg-orange-500/20 text-orange-400 border-orange-500/30",
-  github: "bg-orange-500/20 text-orange-400 border-orange-500/30",
-  etherscan: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  etherscan_transfers: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  reputation: "bg-pink-500/20 text-pink-400 border-pink-500/30",
-  coingecko: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-  neynar: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+  grantees:
+    "bg-[#2d4a3a] text-[#8ab8a4] border-[#3d6a54]",
+  defillama:
+    "bg-[#3a2d4a] text-[#b09ab8] border-[#4a3d5a]",
+  github_activity:
+    "bg-[#4a3520] text-[#c49b6a] border-[#5a4530]",
+  github:
+    "bg-[#4a3520] text-[#c49b6a] border-[#5a4530]",
+  etherscan:
+    "bg-[#203040] text-[#7a9ab0] border-[#304050]",
+  etherscan_transfers:
+    "bg-[#203040] text-[#7a9ab0] border-[#304050]",
+  reputation:
+    "bg-[#4a2030] text-[#b87a8a] border-[#5a3040]",
+  coingecko:
+    "bg-[#4a4020] text-[#b8a870] border-[#5a5030]",
+  neynar:
+    "bg-[#203a3a] text-[#7ab0a8] border-[#304a4a]",
 };
 
 const SOURCES = Object.keys(SOURCE_COLORS);

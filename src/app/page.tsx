@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import { MessageBubble } from "./components/MessageBubble";
 import { ChatInput } from "./components/ChatInput";
+import { TideGlyph } from "./components/TideGlyph";
+import { TideSea } from "./components/TideSea";
 import type { Message, SqlResult } from "./components/types";
 
 const STARTER_PROMPTS = [
@@ -115,30 +117,30 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen bg-[#0a0a0f] text-gray-100">
+    <div className="flex h-screen bg-surface text-text">
       {/* Sidebar */}
-      <aside className="w-64 border-r border-gray-800 p-4 flex flex-col">
+      <aside className="w-64 border-r border-border p-4 flex flex-col">
         <div className="flex items-center gap-2 mb-8">
-          <div className="w-8 h-8 rounded-lg bg-cyan-500 flex items-center justify-center text-sm font-bold text-black">
-            T
-          </div>
-          <span className="text-lg font-semibold">Tide</span>
+          <TideGlyph size={32} />
+          <span className="font-display text-lg uppercase tracking-wider">
+            Tide
+          </span>
         </div>
-        <p className="text-xs text-gray-500 mb-4">
+        <p className="text-xs font-editorial italic text-text-secondary mb-4">
           On-chain risk & reputation co-pilot for DAO treasuries
         </p>
-        <div className="text-xs text-gray-600 space-y-1">
+        <div className="text-xs text-text-tertiary font-mono space-y-1">
           <div>grantees.registry</div>
           <div>defillama.protocols</div>
           <div>github_activity.prs</div>
           <div>etherscan_transfers.transfers</div>
           <div>reputation.casts_scored</div>
         </div>
-        <div className="mt-auto text-xs text-gray-600">
+        <div className="mt-auto text-xs text-text-tertiary font-mono">
           Powered by{" "}
           <a
             href="https://withcoral.com"
-            className="text-cyan-400 hover:underline"
+            className="text-accent hover:underline"
             target="_blank"
             rel="noopener"
           >
@@ -147,7 +149,7 @@ export default function Home() {
           {" + "}
           <a
             href="https://mimo.xiaomi.com"
-            className="text-cyan-400 hover:underline"
+            className="text-accent hover:underline"
             target="_blank"
             rel="noopener"
           >
@@ -156,54 +158,88 @@ export default function Home() {
         </div>
       </aside>
 
-      {/* Main chat area */}
+      {/* Main area */}
       <main className="flex-1 flex flex-col">
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          {/* Empty state */}
-          {messages.length === 0 && (
-            <div className="max-w-2xl mx-auto mt-20">
-              <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                Tide
+        {/* Empty state — hero with sea */}
+        {messages.length === 0 && (
+          <div className="relative flex-1 overflow-hidden">
+            {/* 3D sea background */}
+            <TideSea />
+
+            {/* horizon glow overlay */}
+            <div
+              className="absolute left-0 right-0 pointer-events-none z-[2]"
+              style={{
+                top: "48%",
+                height: "34vh",
+                background:
+                  "radial-gradient(ellipse 70% 100% at 50% 0%, rgba(212,146,103,0.22), transparent 60%), linear-gradient(180deg, transparent, rgba(6,8,10,0.55) 70%, #06080a 100%)",
+              }}
+            />
+
+            {/* hero content */}
+            <div className="relative z-[5] flex flex-col items-center justify-center min-h-full px-[clamp(28px,3.6vw,56px)]">
+              {/* wordmark */}
+              <h1 className="font-display text-[clamp(120px,22vw,320px)] leading-[0.78] tracking-[-0.04em] text-text select-none">
+                T<span className="text-accent">I</span>DE
               </h1>
-              <p className="text-gray-400 mb-8">
-                Ask questions about DAO treasuries, grantee reputation, protocol
-                risk, and on-chain activity — all in one SQL surface.
+
+              {/* tagline */}
+              <p className="font-editorial italic text-[clamp(18px,2.4vw,36px)] text-text mt-4 tracking-[-0.01em]">
+                Every treasury has a <em className="text-accent">tide-line</em>
               </p>
-              <div className="space-y-2">
+
+              {/* subtitle */}
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-text-secondary mt-6">
+                Five sources &middot; One SQL join &middot; Zero guesswork
+              </p>
+
+              {/* starter prompts */}
+              <div className="mt-12 w-full max-w-xl space-y-2">
                 {STARTER_PROMPTS.map((prompt) => (
                   <button
                     key={prompt}
                     onClick={() => handleSubmit(prompt)}
-                    className="w-full text-left p-3 rounded-lg border border-gray-800 hover:border-cyan-500/50 hover:bg-gray-900/50 transition-colors text-sm text-gray-300"
+                    className="w-full text-left p-3 rounded-lg border border-border hover:border-accent/50 hover:bg-surface-2/50 transition-colors text-sm text-text"
                   >
                     {prompt}
                   </button>
                 ))}
               </div>
             </div>
-          )}
 
-          {/* Messages */}
-          {messages.map((msg, i) => (
-            <MessageBubble key={i} message={msg} />
-          ))}
+            {/* corner ticks */}
+            <i className="absolute top-[78px] left-[clamp(28px,3.6vw,56px)] w-3.5 h-3.5 border border-border border-r-0 border-b-0 z-[5]" />
+            <i className="absolute top-[78px] right-[clamp(28px,3.6vw,56px)] w-3.5 h-3.5 border border-border border-l-0 border-b-0 z-[5]" />
+            <i className="absolute bottom-[clamp(28px,3.6vw,56px)] left-[clamp(28px,3.6vw,56px)] w-3.5 h-3.5 border border-border border-r-0 border-t-0 z-[5]" />
+            <i className="absolute bottom-[clamp(28px,3.6vw,56px)] right-[clamp(28px,3.6vw,56px)] w-3.5 h-3.5 border border-border border-l-0 border-t-0 z-[5]" />
+          </div>
+        )}
 
-          {/* Loading indicator */}
-          {loading && messages[messages.length - 1]?.role !== "assistant" && (
-            <div className="max-w-3xl">
-              <div className="rounded-lg p-4 bg-gray-900 border border-gray-800">
-                <div className="flex items-center gap-2 text-gray-500 text-sm">
-                  <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                  Thinking...
+        {/* Chat messages */}
+        {messages.length > 0 && (
+          <div className="flex-1 overflow-y-auto p-6 space-y-6">
+            {messages.map((msg, i) => (
+              <MessageBubble key={i} message={msg} />
+            ))}
+
+            {/* Loading indicator */}
+            {loading && messages[messages.length - 1]?.role !== "assistant" && (
+              <div className="max-w-3xl">
+                <div className="rounded-lg p-4 bg-surface-2 border border-border">
+                  <div className="flex items-center gap-2 text-text-secondary text-sm">
+                    <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                    Thinking...
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          <div ref={messagesEndRef} />
-        </div>
+            <div ref={messagesEndRef} />
+          </div>
+        )}
 
-        {/* Input */}
+        {/* Input — always visible */}
         <ChatInput onSubmit={handleSubmit} loading={loading} />
       </main>
     </div>

@@ -13,19 +13,19 @@ function highlightSql(sql: string): string {
     .replace(/>/g, "&gt;")
     .replace(
       SQL_KEYWORDS,
-      '<span class="text-cyan-400 font-semibold">$1</span>'
+      '<span class="text-accent font-semibold">$1</span>'
     )
     .replace(
       SQL_FUNCTIONS,
-      '<span class="text-purple-400">$1</span>'
+      '<span class="text-[#c49b7a]">$1</span>'
     )
     .replace(
       /('[^']*')/g,
-      '<span class="text-amber-300">$1</span>'
+      '<span class="text-[#d4a574]">$1</span>'
     )
     .replace(
       /(\b\d+\.?\d*)\b/g,
-      '<span class="text-emerald-400">$1</span>'
+      '<span class="text-[#8ab8a4]">$1</span>'
     );
 }
 
@@ -38,24 +38,24 @@ interface SqlPreviewProps {
 
 export function SqlPreview({ sql, ms, cached, rowCount }: SqlPreviewProps) {
   return (
-    <div className="mt-4 rounded-lg bg-[#0d0d14] border border-gray-800 overflow-hidden">
-      <div className="flex items-center justify-between px-3 py-2 border-b border-gray-800">
+    <div className="mt-4 rounded-lg bg-surface-3 border border-border overflow-hidden">
+      <div className="flex items-center justify-between px-3 py-2 border-b border-border">
         <div className="flex items-center gap-2">
-          <span className="text-xs text-cyan-400 font-mono font-semibold">
+          <span className="text-xs text-accent font-mono font-semibold">
             SQL
           </span>
           <SourceChips sql={sql} />
         </div>
-        <span className="text-xs text-gray-500">
+        <span className="text-xs text-text-tertiary">
           {rowCount} rows &middot; {ms}ms
           {cached && (
-            <span className="ml-1 text-green-400">&middot; cached</span>
+            <span className="ml-1 text-success">&middot; cached</span>
           )}
         </span>
       </div>
       <pre className="p-3 text-xs overflow-x-auto">
         <code
-          className="font-mono text-gray-300"
+          className="font-mono text-text"
           dangerouslySetInnerHTML={{ __html: highlightSql(sql) }}
         />
       </pre>

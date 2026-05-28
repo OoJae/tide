@@ -31,8 +31,8 @@ export function MessageBubble({ message }: MessageBubbleProps) {
       <div
         className={`rounded-lg p-4 ${
           isUser
-            ? "bg-cyan-500/10 border border-cyan-500/20"
-            : "bg-gray-900 border border-gray-800"
+            ? "bg-accent/10 border border-accent/20"
+            : "bg-surface-2 border border-border"
         }`}
       >
         {/* Error state */}
