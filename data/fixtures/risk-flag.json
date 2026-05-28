@@ -1,0 +1,52 @@
+{
+  "prompt": "Flag the grantees whose protocol TVL dropped more than 5% this week",
+  "sql": "SELECT g.recipient_name, d.tvl, d.change_7d, d.change_1d,\n           AVG(rep.sentiment_score) AS avg_sentiment\n    FROM grantees.registry g\n    JOIN defillama.protocols d ON d.slug = g.project_slug\n    LEFT JOIN reputation.casts_scored rep ON rep.project_slug = g.project_slug\n    WHERE d.change_7d < -5\n    GROUP BY g.recipient_name, d.tvl, d.change_7d, d.change_1d\n    ORDER BY d.change_7d ASC",
+  "rows": [
+    {
+      "recipient_name": "Rocket Pool",
+      "tvl": 796935895.2555081,
+      "change_7d": -9.826554226713997,
+      "change_1d": 2.652067461957188,
+      "avg_sentiment": 0.81
+    },
+    {
+      "recipient_name": "Balancer V2",
+      "tvl": 30726315.47030528,
+      "change_7d": -8.350524339927233,
+      "change_1d": -4.280342978106361,
+      "avg_sentiment": 0.45
+    },
+    {
+      "recipient_name": "Aave V3",
+      "tvl": 13122298075.984526,
+      "change_7d": -7.097514032626023,
+      "change_1d": -4.0864507331090465,
+      "avg_sentiment": 0.815
+    },
+    {
+      "recipient_name": "Lido Finance",
+      "tvl": 17604155415.591103,
+      "change_7d": -6.683319023547128,
+      "change_1d": -4.479255168990548,
+      "avg_sentiment": 0.685
+    },
+    {
+      "recipient_name": "1inch Network",
+      "tvl": 2827158.4070236506,
+      "change_7d": -5.942838499758864,
+      "change_1d": -4.2240859391751115,
+      "avg_sentiment": 0.82
+    },
+    {
+      "recipient_name": "SushiSwap",
+      "tvl": 36882995.303449765,
+      "change_7d": -5.372310246743012,
+      "change_1d": -3.343208233886685,
+      "avg_sentiment": 0.25
+    }
+  ],
+  "ms": 5976,
+  "cached": false,
+  "rowCount": 6,
+  "snapshotAt": "2026-05-28T10:06:30.960Z"
+}

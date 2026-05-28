@@ -1,0 +1,136 @@
+{
+  "prompt": "Show me the top grantees by protocol TVL",
+  "sql": "SELECT g.recipient_name, g.amount_approved_usdc, d.tvl, d.change_7d,\n           COUNT(DISTINCT ga.pr_number) FILTER (WHERE ga.state = 'merged') AS merged_prs,\n           COUNT(DISTINCT rep.cast_hash) FILTER (WHERE rep.sentiment_score > 0.5) AS positive_mentions,\n           AVG(rep.sentiment_score) AS avg_sentiment\n    FROM grantees.registry g\n    JOIN defillama.protocols d ON d.slug = g.project_slug\n    LEFT JOIN github_activity.prs ga ON ga.org = g.github_handle\n    LEFT JOIN reputation.casts_scored rep ON rep.project_slug = g.project_slug\n    GROUP BY g.recipient_name, g.amount_approved_usdc, d.tvl, d.change_7d\n    ORDER BY d.tvl DESC",
+  "rows": [
+    {
+      "recipient_name": "Lido Finance",
+      "amount_approved_usdc": 75000,
+      "tvl": 17604155415.591103,
+      "change_7d": -6.683319023547128,
+      "merged_prs": 3,
+      "positive_mentions": 2,
+      "avg_sentiment": 0.6849999999999999
+    },
+    {
+      "recipient_name": "Aave V3",
+      "amount_approved_usdc": 85000,
+      "tvl": 13122298075.984526,
+      "change_7d": -7.097514032626023,
+      "merged_prs": 2,
+      "positive_mentions": 2,
+      "avg_sentiment": 0.8150000000000001
+    },
+    {
+      "recipient_name": "Uniswap V3",
+      "amount_approved_usdc": 200000,
+      "tvl": 1663673599.168798,
+      "change_7d": -4.826080292532836,
+      "merged_prs": 4,
+      "positive_mentions": 2,
+      "avg_sentiment": 0.725
+    },
+    {
+      "recipient_name": "Curve DEX",
+      "amount_approved_usdc": 62000,
+      "tvl": 1602091836.1761522,
+      "change_7d": -4.02075263112917,
+      "merged_prs": 2,
+      "positive_mentions": 1,
+      "avg_sentiment": 0.59
+    },
+    {
+      "recipient_name": "Compound V3",
+      "amount_approved_usdc": 48000,
+      "tvl": 1177262619.5489326,
+      "change_7d": -4.311765561403675,
+      "merged_prs": 2,
+      "positive_mentions": 1,
+      "avg_sentiment": 0.75
+    },
+    {
+      "recipient_name": "Rocket Pool",
+      "amount_approved_usdc": 66000,
+      "tvl": 796935895.2555081,
+      "change_7d": -9.826554226713997,
+      "merged_prs": 2,
+      "positive_mentions": 2,
+      "avg_sentiment": 0.8099999999999999
+    },
+    {
+      "recipient_name": "Yearn Finance",
+      "amount_approved_usdc": 55000,
+      "tvl": 169973887.06517258,
+      "change_7d": -3.212419258808012,
+      "merged_prs": 0,
+      "positive_mentions": 1,
+      "avg_sentiment": 0.72
+    },
+    {
+      "recipient_name": "Stargate V2",
+      "amount_approved_usdc": 58000,
+      "tvl": 79159277.73188363,
+      "change_7d": -4.513099204947878,
+      "merged_prs": 1,
+      "positive_mentions": 1,
+      "avg_sentiment": 0.7
+    },
+    {
+      "recipient_name": "SushiSwap",
+      "amount_approved_usdc": 38000,
+      "tvl": 36882995.303449765,
+      "change_7d": -5.372310246743012,
+      "merged_prs": 1,
+      "positive_mentions": 0,
+      "avg_sentiment": 0.25
+    },
+    {
+      "recipient_name": "Balancer V2",
+      "amount_approved_usdc": 42000,
+      "tvl": 30726315.47030528,
+      "change_7d": -8.350524339927233,
+      "merged_prs": 2,
+      "positive_mentions": 0,
+      "avg_sentiment": 0.45
+    },
+    {
+      "recipient_name": "Hop Protocol",
+      "amount_approved_usdc": 52000,
+      "tvl": 3468076.3119030995,
+      "change_7d": -4.179540439384979,
+      "merged_prs": 2,
+      "positive_mentions": 1,
+      "avg_sentiment": 0.68
+    },
+    {
+      "recipient_name": "1inch Network",
+      "amount_approved_usdc": 67000,
+      "tvl": 2827158.4070236506,
+      "change_7d": -5.942838499758864,
+      "merged_prs": 1,
+      "positive_mentions": 1,
+      "avg_sentiment": 0.82
+    },
+    {
+      "recipient_name": "PoolTogether V4",
+      "amount_approved_usdc": 35000,
+      "tvl": 745338.2586129452,
+      "change_7d": -0.11883009339189245,
+      "merged_prs": 1,
+      "positive_mentions": 0,
+      "avg_sentiment": 0.35
+    },
+    {
+      "recipient_name": "Snapshot",
+      "amount_approved_usdc": 29000,
+      "tvl": 0,
+      "change_7d": null,
+      "merged_prs": 1,
+      "positive_mentions": 1,
+      "avg_sentiment": 0.85
+    }
+  ],
+  "ms": 5232,
+  "cached": false,
+  "rowCount": 14,
+  "snapshotAt": "2026-05-28T10:06:24.982Z"
+}
