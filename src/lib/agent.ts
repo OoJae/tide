@@ -22,15 +22,16 @@ Full GitHub API access. Key tables:
 - github.search_issues(q => '...') — search across all repos
 - github.search_commits(q => '...')
 
-### etherscan.token_transfers
-ERC-20 transfers: hash, from_address, to_address, contract_address, value, token_symbol, block_time
-Requires: WHERE chainid = N AND address = '0x...'
-Note: Free API key only supports chainid = 1 (Ethereum mainnet). Base (8453) requires paid plan.
-
-### etherscan_transfers.transfers (CSV file)
+### etherscan_transfers.transfers (CSV file) — PREFERRED for on-chain data
 Pre-fetched USDC transfer history for grantee wallets on Ethereum mainnet.
 Columns: recipient_name, wallet, hash, from_address, to_address, value, token_symbol, block_time, block_number, chainid
 JOIN ON et.wallet = g.wallet. Cast value: CAST(et.value AS DOUBLE) / 1e6 for USDC amount.
+Use this source for cross-source JOINs with grantees — it already has recipient_name mapped.
+
+### etherscan.token_transfers (requires API key — may not be available)
+Live ERC-20 transfers: hash, from_address, to_address, contract_address, value, token_symbol, block_time
+Requires: WHERE chainid = N AND address = '0x...'
+Note: Only use if etherscan_transfers.transfers doesn't cover your needs. Free API key only supports chainid = 1.
 
 ### reputation.casts_scored (JSONL file)
 Pre-scored Farcaster sentiment: project_slug, cast_hash, author, text, sentiment_score, relevance, scored_at

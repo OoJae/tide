@@ -5,11 +5,16 @@ set -e
 
 echo "Adding Coral sources..."
 
-# File-backed sources (no secrets needed)
-coral source add --file ./coral/sources/grantees.yaml 2>&1 || true
-coral source add --file ./coral/sources/github_activity.yaml 2>&1 || true
-coral source add --file ./coral/sources/reputation.yaml 2>&1 || true
-coral source add --file ./coral/sources/etherscan_transfers.yaml 2>&1 || true
+# Rewrite hardcoded local paths to container paths (file-backed sources)
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+for f in grantees github_activity reputation etherscan_transfers; do
+  SRC="./coral/sources/${f}.yaml"
+  TMP="/tmp/${f}.yaml"
+  sed "s|file:///Users/oluwademilade/Desktop/Tide/|file://${PROJECT_ROOT}/|g" "$SRC" > "$TMP"
+  coral source add --file "$TMP" 2>&1 || true
+  rm -f "$TMP"
+done
 
 # HTTP sources (require API keys as env vars)
 coral source add --file ./coral/sources/defillama.yaml 2>&1 || true

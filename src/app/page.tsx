@@ -131,7 +131,7 @@ export default function Home() {
           <div>grantees.registry</div>
           <div>defillama.protocols</div>
           <div>github_activity.prs</div>
-          <div>etherscan.token_transfers</div>
+          <div>etherscan_transfers.transfers</div>
           <div>reputation.casts_scored</div>
         </div>
         <div className="mt-auto text-xs text-gray-600">

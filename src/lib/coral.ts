@@ -32,7 +32,11 @@ export async function runCoralSql(sql: string): Promise<CoralResult> {
 }
 
 export async function listCatalog(): Promise<Record<string, unknown>[]> {
-  return (await runCoralSql("SELECT * FROM coral.tables")).rows;
+  return (
+    await runCoralSql(
+      "SELECT * FROM coral.tables WHERE schema_name IN ('grantees', 'defillama', 'github_activity', 'etherscan', 'etherscan_transfers', 'reputation', 'coingecko') ORDER BY schema_name"
+    )
+  ).rows;
 }
 
 export async function describeTable(
