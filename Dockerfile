@@ -1,4 +1,4 @@
-FROM node:20-slim AS base
+FROM node:22-slim
 
 # Install coral binary
 RUN apt-get update && apt-get install -y curl ca-certificates && rm -rf /var/lib/apt/lists/*
@@ -8,23 +8,18 @@ RUN curl -sSL https://github.com/withcoral/coral/releases/download/v0.4.1/coral-
 
 WORKDIR /app
 
-# Install dependencies
+# Install dependencies (cached layer)
 COPY package.json pnpm-lock.yaml ./
 RUN corepack enable && pnpm install --frozen-lockfile
 
-# Copy source
+# Copy everything
 COPY . .
+RUN chmod +x ./scripts/add-sources.sh
 
 # Build Next.js
 RUN pnpm build
 
-# Copy source specs and data for runtime
-COPY coral/sources/ ./coral/sources/
-COPY data/ ./data/
-COPY scripts/add-sources.sh ./scripts/add-sources.sh
-RUN chmod +x ./scripts/add-sources.sh
-
 EXPOSE 3000
 
-# At container start: add sources, then start the app
+# At container start: add Coral sources, then start the app
 CMD ["sh", "-c", "./scripts/add-sources.sh && pnpm start"]
