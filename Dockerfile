@@ -9,7 +9,7 @@ RUN curl -sSL https://github.com/withcoral/coral/releases/download/v0.4.1/coral-
 WORKDIR /app
 
 # Install dependencies (cached layer)
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml .npmrc ./
 RUN corepack enable && pnpm install --frozen-lockfile
 
 # Copy everything
