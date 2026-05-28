@@ -1,0 +1,41 @@
+name: reputation
+version: 0.1.0
+dsl_version: 3
+backend: file
+description: >-
+  Pre-scored Farcaster cast sentiment data for DAO grantee projects.
+  Each row links a cast to a project with sentiment and relevance scores.
+tables:
+  - name: casts_scored
+    description: >-
+      LLM-scored Farcaster casts with sentiment and relevance scores,
+      linked to grantee project slugs for cross-source JOIN with grantees.
+    format: jsonl
+    source:
+      location: file:///Users/oluwademilade/Desktop/Tide/data/reputation/
+      glob: "**/*.jsonl"
+    columns:
+      - name: project_slug
+        type: Utf8
+        description: Grant project identifier matching grantees.registry.project_slug.
+      - name: cast_hash
+        type: Utf8
+        description: Farcaster cast hash identifier.
+      - name: author
+        type: Utf8
+        description: Farcaster username of the cast author.
+      - name: text
+        type: Utf8
+        description: Cast text content.
+      - name: sentiment_score
+        type: Float64
+        description: LLM-assigned sentiment score from 0 (negative) to 1 (positive).
+      - name: relevance
+        type: Float64
+        description: LLM-assigned relevance score from 0 (irrelevant) to 1 (highly relevant).
+      - name: scored_at
+        type: Utf8
+        description: ISO 8601 timestamp when the cast was scored.
+test_queries:
+  - SELECT project_slug, sentiment_score, relevance FROM reputation.casts_scored LIMIT 3
+  - SELECT project_slug, COUNT(*) AS cast_count, AVG(sentiment_score) AS avg_sentiment FROM reputation.casts_scored GROUP BY project_slug ORDER BY avg_sentiment DESC

@@ -22,12 +22,14 @@ Full GitHub API access. Key tables:
 - github.search_issues(q => '...') — search across all repos
 - github.search_commits(q => '...')
 
-### etherscan.token_transfers (when available)
+### etherscan.token_transfers
 ERC-20 transfers: hash, from_address, to_address, contract_address, value, token_symbol, block_time
 Requires: WHERE chainid = N AND address = '0x...'
+Note: Free API key only supports chainid = 1 (Ethereum mainnet). Base (8453) requires paid plan.
 
-### reputation.casts_scored (JSONL file, when available)
-Farcaster sentiment: project_slug, cast_hash, sentiment_score, relevance
+### reputation.casts_scored (JSONL file)
+Pre-scored Farcaster sentiment: project_slug, cast_hash, author, text, sentiment_score, relevance, scored_at
+JOIN ON rep.project_slug = g.project_slug. Use sentiment_score > 0.5 for positive mentions.
 
 ## Rules
 
@@ -44,23 +46,28 @@ Farcaster sentiment: project_slug, cast_hash, sentiment_score, relevance
 
 ## Example Queries
 
-Grantees with DeFi TVL and PR activity:
+Full cross-source query (grantees × defillama × reputation × github_activity):
 \`\`\`sql
 SELECT g.recipient_name, g.amount_approved_usdc, d.tvl, d.change_7d,
-       COUNT(DISTINCT ga.pr_number) FILTER (WHERE ga.state = 'merged') AS merged_prs
+       COUNT(DISTINCT ga.pr_number) FILTER (WHERE ga.state = 'merged') AS merged_prs,
+       COUNT(DISTINCT rep.cast_hash) FILTER (WHERE rep.sentiment_score > 0.5) AS positive_mentions,
+       AVG(rep.sentiment_score) AS avg_sentiment
 FROM grantees.registry g
 JOIN defillama.protocols d ON d.slug = g.project_slug
 LEFT JOIN github_activity.prs ga ON ga.org = g.github_handle
+LEFT JOIN reputation.casts_scored rep ON rep.project_slug = g.project_slug
 GROUP BY g.recipient_name, g.amount_approved_usdc, d.tvl, d.change_7d
 ORDER BY d.tvl DESC
 \`\`\`
 
-Risk flag (declining TVL):
+Risk flag (declining TVL + sentiment):
 \`\`\`sql
-SELECT g.recipient_name, d.tvl, d.change_7d
+SELECT g.recipient_name, d.tvl, d.change_7d, AVG(rep.sentiment_score) AS avg_sentiment
 FROM grantees.registry g
 JOIN defillama.protocols d ON d.slug = g.project_slug
-WHERE d.change_7d < -20
+LEFT JOIN reputation.casts_scored rep ON rep.project_slug = g.project_slug
+WHERE d.change_7d < -5
+GROUP BY g.recipient_name, d.tvl, d.change_7d
 ORDER BY d.change_7d ASC
 \`\`\`
 `;
