@@ -10,7 +10,7 @@ WORKDIR /app
 
 # Install dependencies (cached layer)
 COPY package.json pnpm-lock.yaml ./
-RUN corepack enable pnpm@9 && pnpm install --frozen-lockfile
+RUN corepack prepare pnpm@9 --activate && corepack enable pnpm && pnpm install --frozen-lockfile
 
 # Copy everything
 COPY . .
