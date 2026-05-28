@@ -24,7 +24,7 @@ A single cross-source SQL JOIN across 5 sources (grantees CSV + etherscan + gith
 6. When blocked by a Coral limitation: check docs first, then surface options to the human — don't silently hack around it.
 
 ## Stack
-Next.js 15 (App Router) + TS + Tailwind + shadcn/ui. Anthropic SDK (agent: claude-opus-4-7; sentiment: claude-haiku-4-5-20251001). pnpm. Docker → Railway/Fly.io.
+Next.js 15 (App Router) + TS + Tailwind + shadcn/ui. Anthropic SDK → MiMo-V2.5-Pro (Xiaomi, Anthropic-compatible API). pnpm. Docker → Railway/Fly.io.
 
 ## Layout
 coral/sources/{defillama,coingecko,neynar,etherscan}.yaml · data/grantees/registry.csv · data/reputation/casts_scored.jsonl · scripts/{score-reputation,add-sources,snapshot-fixtures} · src/app/api/ask/route.ts · lib/{coral,agent}.ts · components/{ChatPanel,SqlPreview,ResultsGrid,SourceChips,RiskBadge}

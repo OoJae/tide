@@ -47,6 +47,9 @@ tables:
         max: 250
         query_param: per_page
     columns:
+      - name: vs_currency
+        type: Utf8
+        description: Quote currency filter (e.g. 'usd', 'eur', 'btc').
       - name: id
         type: Utf8
         description: Coin identifier (e.g. 'bitcoin', 'ethereum').

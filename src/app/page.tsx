@@ -150,12 +150,12 @@ export default function Home() {
           </a>{" "}
           +{" "}
           <a
-            href="https://anthropic.com"
+            href="https://mimo.xiaomi.com"
             className="text-cyan-400 hover:underline"
             target="_blank"
             rel="noopener"
           >
-            Claude
+            MiMo
           </a>
         </div>
       </aside>

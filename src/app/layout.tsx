@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Tide — DAO Treasury Risk Co-pilot",
-  description: "On-chain risk & reputation co-pilot for DAO treasuries, powered by Coral + Claude",
+  description: "On-chain risk & reputation co-pilot for DAO treasuries, powered by Coral + MiMo",
 };
 
 export default function RootLayout({

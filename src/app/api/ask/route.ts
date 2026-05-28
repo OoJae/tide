@@ -2,7 +2,10 @@ import Anthropic from "@anthropic-ai/sdk";
 import { runCoralSql, listCatalog, describeTable } from "@/lib/coral";
 import { SYSTEM_PROMPT, TOOL_DEFINITIONS } from "@/lib/agent";
 
-const anthropic = new Anthropic();
+const anthropic = new Anthropic({
+  apiKey: process.env.MIMO_API_KEY,
+  baseURL: process.env.MIMO_BASE_URL,
+});
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
@@ -20,7 +23,7 @@ export async function POST(req: Request) {
 
         while (continueLoop) {
           const response = await anthropic.messages.create({
-            model: "claude-sonnet-4-20250514",
+            model: "mimo-v2.5-pro",
             max_tokens: 4096,
             system: SYSTEM_PROMPT,
             tools: TOOL_DEFINITIONS,
