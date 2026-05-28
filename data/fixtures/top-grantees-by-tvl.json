@@ -1,136 +1,140 @@
 {
   "prompt": "Show me the top grantees by protocol TVL",
-  "sql": "SELECT g.recipient_name, g.amount_approved_usdc, d.tvl, d.change_7d,\n           COUNT(DISTINCT ga.pr_number) FILTER (WHERE ga.state = 'merged') AS merged_prs,\n           COUNT(DISTINCT rep.cast_hash) FILTER (WHERE rep.sentiment_score > 0.5) AS positive_mentions,\n           AVG(rep.sentiment_score) AS avg_sentiment\n    FROM grantees.registry g\n    JOIN defillama.protocols d ON d.slug = g.project_slug\n    LEFT JOIN github_activity.prs ga ON ga.org = g.github_handle\n    LEFT JOIN reputation.casts_scored rep ON rep.project_slug = g.project_slug\n    GROUP BY g.recipient_name, g.amount_approved_usdc, d.tvl, d.change_7d\n    ORDER BY d.tvl DESC",
+  "sql": "SELECT g.recipient_name, g.amount_approved_usdc, d.tvl, d.change_7d,\n           COUNT(DISTINCT ga.pr_number) FILTER (WHERE ga.state = 'merged') AS merged_prs,\n           COUNT(DISTINCT rep.cast_hash) FILTER (WHERE rep.sentiment_score > 0.5) AS positive_mentions,\n           AVG(rep.sentiment_score) AS avg_sentiment,\n           COALESCE(SUM(CAST(et.value AS DOUBLE)) / 1e6, 0) AS usdc_received\n    FROM grantees.registry g\n    JOIN defillama.protocols d ON d.slug = g.project_slug\n    LEFT JOIN github_activity.prs ga ON ga.org = g.github_handle\n    LEFT JOIN reputation.casts_scored rep ON rep.project_slug = g.project_slug\n    LEFT JOIN etherscan_transfers.transfers et ON et.wallet = g.wallet\n    GROUP BY g.recipient_name, g.amount_approved_usdc, d.tvl, d.change_7d\n    ORDER BY d.tvl DESC",
   "rows": [
     {
       "recipient_name": "Lido Finance",
       "amount_approved_usdc": 75000,
-      "tvl": 17604155415.591103,
-      "change_7d": -6.683319023547128,
+      "tvl": 17612396996.60268,
+      "change_7d": -6.0227062551622765,
       "merged_prs": 3,
       "positive_mentions": 2,
-      "avg_sentiment": 0.6849999999999999
+      "avg_sentiment": 0.6850000000000008,
+      "usdc_received": 274285651.251234
     },
     {
       "recipient_name": "Aave V3",
       "amount_approved_usdc": 85000,
-      "tvl": 13122298075.984526,
-      "change_7d": -7.097514032626023,
+      "tvl": 13086339219.796566,
+      "change_7d": -7.998843158859543,
       "merged_prs": 2,
       "positive_mentions": 2,
-      "avg_sentiment": 0.8150000000000001
+      "avg_sentiment": 0.8149999999999981,
+      "usdc_received": 177875511.60493
     },
     {
       "recipient_name": "Uniswap V3",
       "amount_approved_usdc": 200000,
-      "tvl": 1663673599.168798,
-      "change_7d": -4.826080292532836,
+      "tvl": 1667134035.1939874,
+      "change_7d": -4.81086565782617,
       "merged_prs": 4,
       "positive_mentions": 2,
-      "avg_sentiment": 0.725
+      "avg_sentiment": 0.7250000000000002,
+      "usdc_received": 1083.064064
     },
     {
       "recipient_name": "Curve DEX",
       "amount_approved_usdc": 62000,
-      "tvl": 1602091836.1761522,
-      "change_7d": -4.02075263112917,
+      "tvl": 1603690303.264723,
+      "change_7d": -4.024211545474728,
       "merged_prs": 2,
       "positive_mentions": 1,
-      "avg_sentiment": 0.59
+      "avg_sentiment": 0.5900000000000001,
+      "usdc_received": 58310.728864
     },
     {
       "recipient_name": "Compound V3",
       "amount_approved_usdc": 48000,
-      "tvl": 1177262619.5489326,
-      "change_7d": -4.311765561403675,
+      "tvl": 1178830464.238242,
+      "change_7d": -4.504587156100371,
       "merged_prs": 2,
       "positive_mentions": 1,
-      "avg_sentiment": 0.75
+      "avg_sentiment": 0.75,
+      "usdc_received": 48899459.226118
     },
     {
       "recipient_name": "Rocket Pool",
       "amount_approved_usdc": 66000,
-      "tvl": 796935895.2555081,
-      "change_7d": -9.826554226713997,
+      "tvl": 898155157.6000936,
+      "change_7d": 58.28638906092437,
       "merged_prs": 2,
       "positive_mentions": 2,
-      "avg_sentiment": 0.8099999999999999
+      "avg_sentiment": 0.8099999999999999,
+      "usdc_received": 0
     },
     {
       "recipient_name": "Yearn Finance",
       "amount_approved_usdc": 55000,
-      "tvl": 169973887.06517258,
-      "change_7d": -3.212419258808012,
+      "tvl": 169582052.25074735,
+      "change_7d": -3.6165118838550825,
       "merged_prs": 0,
       "positive_mentions": 1,
-      "avg_sentiment": 0.72
+      "avg_sentiment": 0.7199999999999996,
+      "usdc_received": 5692448.053397
     },
     {
       "recipient_name": "Stargate V2",
       "amount_approved_usdc": 58000,
-      "tvl": 79159277.73188363,
-      "change_7d": -4.513099204947878,
+      "tvl": 79060278.7933066,
+      "change_7d": -4.538310693695081,
       "merged_prs": 1,
       "positive_mentions": 1,
-      "avg_sentiment": 0.7
+      "avg_sentiment": 0.7000000000000008,
+      "usdc_received": 56525218.431853
     },
     {
       "recipient_name": "SushiSwap",
       "amount_approved_usdc": 38000,
-      "tvl": 36882995.303449765,
-      "change_7d": -5.372310246743012,
+      "tvl": 37036087.42835514,
+      "change_7d": -5.215021035186211,
       "merged_prs": 1,
       "positive_mentions": 0,
-      "avg_sentiment": 0.25
+      "avg_sentiment": 0.25,
+      "usdc_received": 971488.357176
     },
     {
       "recipient_name": "Balancer V2",
       "amount_approved_usdc": 42000,
-      "tvl": 30726315.47030528,
-      "change_7d": -8.350524339927233,
+      "tvl": 30783322.014023773,
+      "change_7d": -8.500050361853553,
       "merged_prs": 2,
       "positive_mentions": 0,
-      "avg_sentiment": 0.45
+      "avg_sentiment": 0.4500000000000008,
+      "usdc_received": 6679990.919486
     },
     {
       "recipient_name": "Hop Protocol",
       "amount_approved_usdc": 52000,
-      "tvl": 3468076.3119030995,
-      "change_7d": -4.179540439384979,
+      "tvl": 3474004.0204623826,
+      "change_7d": -4.239236498590529,
       "merged_prs": 2,
       "positive_mentions": 1,
-      "avg_sentiment": 0.68
+      "avg_sentiment": 0.68,
+      "usdc_received": 89.763348
     },
     {
       "recipient_name": "1inch Network",
       "amount_approved_usdc": 67000,
-      "tvl": 2827158.4070236506,
-      "change_7d": -5.942838499758864,
+      "tvl": 2831546.8535780404,
+      "change_7d": -6.070562061872636,
       "merged_prs": 1,
       "positive_mentions": 1,
-      "avg_sentiment": 0.82
+      "avg_sentiment": 0.8200000000000002,
+      "usdc_received": 214181.617235
     },
     {
       "recipient_name": "PoolTogether V4",
       "amount_approved_usdc": 35000,
-      "tvl": 745338.2586129452,
-      "change_7d": -0.11883009339189245,
+      "tvl": 745291.6297875752,
+      "change_7d": -0.13366204498879597,
       "merged_prs": 1,
       "positive_mentions": 0,
-      "avg_sentiment": 0.35
-    },
-    {
-      "recipient_name": "Snapshot",
-      "amount_approved_usdc": 29000,
-      "tvl": 0,
-      "change_7d": null,
-      "merged_prs": 1,
-      "positive_mentions": 1,
-      "avg_sentiment": 0.85
+      "avg_sentiment": 0.35,
+      "usdc_received": 0
     }
   ],
-  "ms": 5232,
+  "ms": 13774,
   "cached": false,
-  "rowCount": 14,
-  "snapshotAt": "2026-05-28T10:06:24.982Z"
+  "rowCount": 13,
+  "snapshotAt": "2026-05-28T12:27:58.130Z"
 }

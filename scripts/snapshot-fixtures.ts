@@ -31,11 +31,13 @@ const FIXTURES = [
     sql: `SELECT g.recipient_name, g.amount_approved_usdc, d.tvl, d.change_7d,
            COUNT(DISTINCT ga.pr_number) FILTER (WHERE ga.state = 'merged') AS merged_prs,
            COUNT(DISTINCT rep.cast_hash) FILTER (WHERE rep.sentiment_score > 0.5) AS positive_mentions,
-           AVG(rep.sentiment_score) AS avg_sentiment
+           AVG(rep.sentiment_score) AS avg_sentiment,
+           COALESCE(SUM(CAST(et.value AS DOUBLE)) / 1e6, 0) AS usdc_received
     FROM grantees.registry g
     JOIN defillama.protocols d ON d.slug = g.project_slug
     LEFT JOIN github_activity.prs ga ON ga.org = g.github_handle
     LEFT JOIN reputation.casts_scored rep ON rep.project_slug = g.project_slug
+    LEFT JOIN etherscan_transfers.transfers et ON et.wallet = g.wallet
     GROUP BY g.recipient_name, g.amount_approved_usdc, d.tvl, d.change_7d
     ORDER BY d.tvl DESC`,
   },

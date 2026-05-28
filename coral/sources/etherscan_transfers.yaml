@@ -1,0 +1,33 @@
+name: etherscan_transfers
+version: 0.1.0
+dsl_version: 3
+backend: file
+description: >-
+  Pre-fetched ERC-20 USDC transfer history for DAO grantee wallets on Ethereum mainnet.
+  Data sourced from Etherscan V2 API. JOIN ON wallet = grantee wallet address.
+tables:
+  - name: transfers
+    description: >-
+      Incoming USDC transfers to grantee wallets. Each row is one transfer event
+      with the grantee name, transaction hash, sender, value (in USDC smallest unit),
+      and block timestamp.
+    format: csv
+    source:
+      location: file:///Users/oluwademilade/Desktop/Tide/data/etherscan/
+      glob: "**/*.csv"
+    format_options:
+      has_header: true
+    columns:
+      - { name: recipient_name, type: Utf8, description: Grantee name from the registry. }
+      - { name: wallet,         type: Utf8, description: Grantee wallet address. }
+      - { name: hash,           type: Utf8, description: Transaction hash. }
+      - { name: from_address,   type: Utf8, description: Sender address. }
+      - { name: to_address,     type: Utf8, description: Recipient address (the grantee wallet). }
+      - { name: value,          type: Utf8, description: Transfer value in USDC smallest unit (6 decimals). Cast to DOUBLE and divide by 1e6 for USDC amount. }
+      - { name: token_symbol,   type: Utf8, description: Token symbol (USDC). }
+      - { name: block_time,     type: Utf8, description: Block timestamp as Unix epoch string. }
+      - { name: block_number,   type: Utf8, description: Block number. }
+      - { name: chainid,        type: Int64, description: EVM chain ID (1 = Ethereum). }
+test_queries:
+  - SELECT recipient_name, COUNT(*) as transfer_count FROM etherscan_transfers.transfers GROUP BY recipient_name LIMIT 5
+  - SELECT hash, value, from_address FROM etherscan_transfers.transfers WHERE recipient_name = 'Aave V3' LIMIT 3

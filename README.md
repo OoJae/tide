@@ -2,9 +2,9 @@
 
 > On-chain risk & reputation co-pilot for DAO treasuries and crypto funds.
 
-Tide turns scattered on-chain, social, and development data into **one SQL surface via [Coral](https://withcoral.com)** and an agent that answers questions no single tool can. Ask things like: *"Show every grantee we paid >$10k of USDC who also merged a PR this month and is positively cited on Farcaster, and flag any whose protocol TVL just collapsed."*
+Tide turns scattered on-chain, social, and development data into **one SQL surface via [Coral](https://withcoral.com)** and an agent that answers questions no single tool can. Ask things like: *"Show every grantee with DeFi TVL who also merged a PR this month and is positively cited on Farcaster, and flag any whose protocol TVL just collapsed."*
 
-That answer is a **single cross-source JOIN** across on-chain transfers, GitHub, Farcaster, DeFiLlama, and a local grantee registry.
+That answer is a **single cross-source JOIN** across DeFiLlama, GitHub, Farcaster sentiment, Etherscan on-chain transfers, and a local grantee registry.
 
 **Built for [Pirates of the Coral-bean](https://withcoral.com/discord) hackathon** — Track 1: Enterprise Agent.
 
@@ -36,6 +36,8 @@ That answer is a **single cross-source JOIN** across on-chain transfers, GitHub,
 
 ## The Hero Query
 
+A single cross-source JOIN across 5 data sources:
+
 ```sql
 SELECT
   g.recipient_name,
@@ -44,14 +46,18 @@ SELECT
   d.change_7d AS tvl_change_7d,
   COUNT(DISTINCT ga.pr_number) FILTER (WHERE ga.state = 'merged') AS merged_prs,
   COUNT(DISTINCT rep.cast_hash) FILTER (WHERE rep.sentiment_score > 0.5) AS positive_mentions,
-  AVG(rep.sentiment_score) AS avg_sentiment
+  AVG(rep.sentiment_score) AS avg_sentiment,
+  COALESCE(SUM(CAST(et.value AS DOUBLE)) / 1e6, 0) AS usdc_received
 FROM grantees.registry g
 JOIN defillama.protocols d ON d.slug = g.project_slug
 LEFT JOIN github_activity.prs ga ON ga.org = g.github_handle
 LEFT JOIN reputation.casts_scored rep ON rep.project_slug = g.project_slug
+LEFT JOIN etherscan_transfers.transfers et ON et.wallet = g.wallet
 GROUP BY g.recipient_name, g.amount_approved_usdc, d.tvl, d.change_7d
 ORDER BY d.tvl DESC;
 ```
+
+**Sources:** grantees (CSV) + defillama (HTTP) + github_activity (CSV) + reputation (JSONL) + etherscan_transfers (CSV, pre-fetched from Etherscan V2 API).
 
 ## Data Sources
 
@@ -60,9 +66,10 @@ ORDER BY d.tvl DESC;
 | `grantees` | CSV file | none | DAO grantee registry |
 | `github_activity` | CSV file | none | Pre-fetched PR data |
 | `reputation` | JSONL file | none | Pre-scored Farcaster sentiment |
+| `etherscan_transfers` | CSV file | none | Pre-fetched USDC transfers for grantee wallets |
 | `defillama` | HTTP | none | DeFi protocol TVL and metrics |
 | `coingecko` | HTTP | API key | Crypto market data |
-| `etherscan` | HTTP | API key | ERC-20 token transfers |
+| `etherscan` | HTTP | API key | Live ERC-20 token transfers |
 | `neynar` | HTTP | API key | Farcaster cast search |
 | `github` | Bundled | token | Full GitHub API access |
 

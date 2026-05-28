@@ -8,6 +8,8 @@ echo "Adding Coral sources..."
 # File-backed sources (no secrets needed)
 coral source add --file ./coral/sources/grantees.yaml 2>&1 || true
 coral source add --file ./coral/sources/github_activity.yaml 2>&1 || true
+coral source add --file ./coral/sources/reputation.yaml 2>&1 || true
+coral source add --file ./coral/sources/etherscan_transfers.yaml 2>&1 || true
 
 # HTTP sources (require API keys as env vars)
 coral source add --file ./coral/sources/defillama.yaml 2>&1 || true
