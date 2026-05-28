@@ -25,7 +25,9 @@
 *.pem
 
 # docs (internal planning docs, not for public)
-/docs/
+/docs/Tide-Build-Plan.md
+/docs/Tide-Research-Report.md
+/docs/DEMO-SCRIPT.md
 
 # debug
 npm-debug.log*

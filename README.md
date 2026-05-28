@@ -134,6 +134,20 @@ src/app/components/    # UI components (SqlPreview, ResultsGrid, etc.)
 src/lib/               # coral.ts (CLI bridge), agent.ts (prompt + tools)
 ```
 
+## Upstream Source Spec PRs
+
+Three source specs were contributed upstream to [withcoral/coral](https://github.com/withcoral/coral):
+
+| Source | PR | Description |
+|--------|----|-------------|
+| DeFiLlama | [#946](https://github.com/withcoral/coral/pull/946) | DeFi protocol TVL and market metrics (no auth) |
+| Etherscan | [#947](https://github.com/withcoral/coral/pull/947) | ERC-20 token transfers via V2 multichain API |
+| Neynar | [#948](https://github.com/withcoral/coral/pull/948) | Farcaster cast search (kind: search pattern) |
+
+## How-To Guide
+
+See [docs/how-to-guide.md](docs/how-to-guide.md) for a step-by-step walkthrough of building Tide — covering Coral source specs, the hero query, the agent loop, and lessons learned.
+
 ## License
 
 Apache-2.0
