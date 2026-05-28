@@ -21,4 +21,4 @@ if [ -n "$GITHUB_TOKEN" ]; then
 fi
 
 echo "All sources added. Run 'coral source list' to verify."
-coral source list
+coral source list 2>&1 || true
