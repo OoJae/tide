@@ -132,16 +132,16 @@ fc4e927 feat: add DEMO_MODE, snapshot fixtures, and Dockerfile
 
 | Component | Status |
 |-----------|--------|
-| Chat UI shell | Working (monolithic page.tsx, 310 lines) |
+| Chat UI shell | Working (refactored into components) |
 | Sidebar with source list | Working |
 | Starter prompts | Working |
-| SQL preview | Working (no syntax highlighting) |
-| Results table | Working (not sortable, not clickable) |
-| SourceChips | Missing |
-| RiskBadge | Missing |
-| Error state display | Missing |
-| Component extraction | Not done (all inline in page.tsx) |
-| shadcn/ui | Not installed |
+| SQL preview | Working (with syntax highlighting + SourceChips) |
+| Results table | Working (sortable columns) |
+| SourceChips | Working (detects schemas in SQL, colored badges) |
+| RiskBadge | Working (red/amber/green from change_7d + sentiment) |
+| Error state display | Working |
+| Component extraction | Done (7 components in src/app/components/) |
+| shadcn/ui | Skipped (raw Tailwind, hackathon timeline) |
 
 ### Deployment
 
@@ -159,19 +159,17 @@ fc4e927 feat: add DEMO_MODE, snapshot fixtures, and Dockerfile
 ## What's Next (Prioritized)
 
 ### High Priority
-1. **UI polish** — extract components, add SourceChips, RiskBadge, SQL syntax highlighting, error states
-2. **README** — architecture diagram, hero query, setup instructions, source-spec links, Apache-2.0
-3. **Deploy** — Railway or Fly.io with env vars, verify public URL works end-to-end
+1. **README** — architecture diagram, hero query, setup instructions, source-spec links, Apache-2.0
+2. **Deploy** — Railway or Fly.io with env vars, verify public URL works end-to-end
 
 ### Medium Priority
-4. **docs/DEMO-SCRIPT.md** — timed beats for the 3-minute demo video
-5. **Source-spec PRs** — open PRs to `withcoral/coral` for the 4 new specs (defillama, coingecko, neynar, etherscan)
-6. **How-to guide** — Hashnode/dev.to post for the Keychron bounty
+3. **docs/DEMO-SCRIPT.md** — timed beats for the 3-minute demo video
+4. **Source-spec PRs** — open PRs to `withcoral/coral` for the 4 new specs (defillama, coingecko, neynar, etherscan)
+5. **How-to guide** — Hashnode/dev.to post for the Keychron bounty
 
 ### Low Priority
-7. **shadcn/ui** — install and convert raw Tailwind to shadcn components
-8. **scripts/score-reputation.ts** — automate reputation scoring (currently hand-seeded)
-9. **Etherscan Base chain** — upgrade API key or use a different chain for the demo
+6. **scripts/score-reputation.ts** — automate reputation scoring (currently hand-seeded)
+7. **Etherscan Base chain** — upgrade API key or use a different chain for the demo
 
 ---
 
@@ -186,6 +184,19 @@ fc4e927 feat: add DEMO_MODE, snapshot fixtures, and Dockerfile
 ---
 
 ## Changelog
+
+### 2026-05-28 (continued)
+
+**`bf0ada1` feat: extract UI components and add SQL highlighting, SourceChips, RiskBadge**
+- Extracted monolithic page.tsx (310 lines) into 7 focused components
+- `SqlPreview.tsx` — SQL syntax highlighting (keywords cyan, strings amber, numbers green), SourceChips integrated
+- `ResultsGrid.tsx` — sortable columns (click header for asc/desc), number formatting
+- `SourceChips.tsx` — colored badges detecting data sources from SQL text
+- `RiskBadge.tsx` — red (change_7d < -10 or sentiment < 0.3) / amber (change_7d < -5 or sentiment < 0.5) indicator
+- `MessageBubble.tsx` — composes SqlPreview + SourceChips + ResultsGrid + RiskBadge
+- `ChatInput.tsx` — extracted input form
+- `types.ts` — shared SqlResult and Message interfaces
+- page.tsx slimmed to 157 lines, error state handling added
 
 ### 2026-05-28
 
