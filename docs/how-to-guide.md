@@ -105,9 +105,6 @@ tables:
       - name: change_7d
         type: Float64
         description: TVL percentage change over the last 7 days.
-      - name: change_1m
-        type: Float64
-        description: TVL percentage change over the last 30 days.
 ```
 
 Let me break down what each section does:

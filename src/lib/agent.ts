@@ -8,7 +8,7 @@ You have access to Coral, a local SQL query engine that exposes multiple data so
 DAO grantee registry: recipient_name, wallet, github_handle, github_repo, project_slug, program, amount_approved_usdc
 
 ### defillama.protocols
-DeFi protocol data: name, slug, category, tvl, change_1d, change_7d, change_1m, mcap, fdv, staking
+DeFi protocol data: name, slug, category, tvl, change_1d, change_7d
 
 ### defillama.protocol_tvl (requires slug filter)
 Single protocol TVL detail with chain breakdown.

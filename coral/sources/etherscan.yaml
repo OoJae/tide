@@ -26,10 +26,18 @@ tables:
     filters:
       - name: chainid
         type: Int64
+        required: true
         description: EVM chain ID (1 = Ethereum, 8453 = Base, 10 = Optimism, 42161 = Arbitrum).
       - name: address
         type: Utf8
+        required: true
         description: Wallet address to query token transfers for.
+      - name: contractaddress
+        type: Utf8
+        description: Token contract address to filter by (e.g. USDC: 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48).
+      - name: sort
+        type: Utf8
+        description: Sort order: 'asc' (oldest first, default) or 'desc' (newest first).
     request:
       method: GET
       path: /api
@@ -46,12 +54,20 @@ tables:
         - name: address
           from: filter
           key: address
+        - name: contractaddress
+          from: filter
+          key: contractaddress
+        - name: sort
+          from: filter
+          key: sort
         - name: apikey
           from: input
           key: ETHERSCAN_API_KEY
     response:
       rows_path:
         - result
+      error_path:
+        - message
       row_strategy: direct
     pagination:
       mode: page
@@ -88,6 +104,10 @@ tables:
       - name: contract_address
         type: Utf8
         description: Token contract address.
+        expr:
+          kind: path
+          path:
+            - contractAddress
       - name: value
         type: Utf8
         description: Transfer value in token's smallest unit (cast to DOUBLE/1e6 for USDC).
