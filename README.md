@@ -6,6 +6,8 @@ Tide turns scattered on-chain, social, and development data into **one SQL surfa
 
 That answer is a **single cross-source JOIN** across DeFiLlama, GitHub, Farcaster sentiment, Etherscan on-chain transfers, and a local grantee registry.
 
+**🌊 Live demo: [tide-production-79a7.up.railway.app](https://tide-production-79a7.up.railway.app/)**
+
 **Built for [Pirates of the Coral-bean](https://withcoral.com/discord) hackathon** — Track 1: Enterprise Agent.
 
 ## Architecture
@@ -104,6 +106,8 @@ Open [http://localhost:3000](http://localhost:3000) and ask a question.
 - **Docker** for deployment
 
 ## Deployment
+
+Live deployment: **[tide-production-79a7.up.railway.app](https://tide-production-79a7.up.railway.app/)** (Railway).
 
 ```bash
 # Build and run locally
