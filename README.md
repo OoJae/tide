@@ -80,7 +80,7 @@ ORDER BY d.tvl DESC;
 brew install withcoral/tap/coral
 
 # 2. Clone and install
-git clone https://github.com/your-username/tide.git && cd tide
+git clone https://github.com/OoJae/tide.git && cd tide
 pnpm install
 
 # 3. Set up env vars
@@ -140,7 +140,7 @@ Three source specs were contributed upstream to [withcoral/coral](https://github
 
 | Source | PR | Description |
 |--------|----|-------------|
-| DeFiLlama | [#946](https://github.com/withcoral/coral/pull/946) | DeFi protocol TVL and market metrics (no auth) |
+| DeFiLlama | [#946](https://github.com/withcoral/coral/pull/946) ✅ merged | DeFi protocol TVL and TVL-change metrics (no auth) |
 | Etherscan | [#947](https://github.com/withcoral/coral/pull/947) | ERC-20 token transfers via V2 multichain API |
 | Neynar | [#948](https://github.com/withcoral/coral/pull/948) | Farcaster cast search (kind: search pattern) |
 
